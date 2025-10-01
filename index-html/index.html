@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="../imges/download.jpg">
+
+  <title>تخزن</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background:#f7feb5;
+      color:#fff;
+      margin:0;
+      padding:20px;
+      text-align:center;
+    }
+    h1 {
+      color:#000000;
+      font-size:3rem; /* عنوان كبير */
+    }
+    input, button {
+      padding:20px;  /* أكبر */
+      font-size:1.5rem; /* خط كبير */
+      margin:10px;
+      border-radius:10px;
+      border:2px solid #4CAF50;
+      width:80%; 
+      max-width:700px; /* علشان يبان وسط الشاشة */
+      display:block;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    button {
+      background:#4CAF50;
+      color:white;
+      font-weight:bold;
+      cursor:pointer;
+    }
+    button:hover { background:#45a049; }
+    .list {
+      margin-top:20px;
+      text-align:left;
+      background:#222;
+      padding:20px;
+      border-radius:12px;
+      max-width:900px;
+      margin-left:auto;
+      margin-right:auto;
+      font-size:1.3rem;
+    }
+    .item {
+      background:#333;
+      padding:15px;
+      margin:10px 0;
+      border-left:6px solid #4CAF50;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-radius:8px;
+    }
+    .deleteBtn {
+      background:#f44336;
+      border:none;
+      padding:15px 25px;
+      color:white;
+      border-radius:8px;
+      font-size:1.2rem;
+      cursor:pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>welcame</h1>
+ <input id="search" class="search" placeholder="🔍 Search..." />
+  <!-- Inputs -->
+  <input id="input1" placeholder="اسم" />
+  <input id="input2" type="number" placeholder="رقم" />
+  <input id="input3" placeholder="اي حاجه" />
+  <button id="save">💾 Save</button>
+
+  <!-- Search -->
+ 
+
+  <!-- List -->
+  <div class="list" id="list">
+    <h3>Saved Data:</h3>
+  </div>
+  <div class="by">
+    <h1>web by AbdElmalk</h1>
+  </div>
+  <script>
+    let savedData = JSON.parse(localStorage.getItem("entries")) || [];
+
+    function renderList(filter = "") {
+      const list = document.getElementById("list");
+      list.innerHTML = "<h3>Saved Data:</h3>";
+      savedData.forEach((entry, index) => {
+        const text = `${entry.input1} ${entry.input2} ${entry.input3}`.toLowerCase();
+        if (text.includes(filter.toLowerCase())) {
+          const div = document.createElement("div");
+          div.className = "item";
+          div.innerHTML = `
+            <div>
+              <span><b>اسم:</b> ${entry.input1}</span>
+              <span><b>رقم:</b> ${entry.input2}</span>
+              <span><b>اي حاجه:</b> ${entry.input3}</span>
+            </div>
+            <button class="deleteBtn" data-index="${index}">Delete</button>
+          `;
+          list.appendChild(div);
+        }
+      });
+
+      document.querySelectorAll(".deleteBtn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const index = e.target.getAttribute("data-index");
+          savedData.splice(index, 1);
+          localStorage.setItem("entries", JSON.stringify(savedData));
+          renderList(document.getElementById("search").value);
+        });
+      });
+    }
+
+    renderList();
+
+    document.getElementById("save").addEventListener("click", () => {
+      const entry = {
+        input1: document.getElementById("input1").value,
+        input2: document.getElementById("input2").value,
+        input3: document.getElementById("input3").value
+      };
+      if (entry.input1 || entry.input2 || entry.input3) {
+        savedData.push(entry);
+        localStorage.setItem("entries", JSON.stringify(savedData));
+        renderList(document.getElementById("search").value);
+        document.getElementById("input1").value = "";
+        document.getElementById("input2").value = "";
+        document.getElementById("input3").value = "";
+      }
+    });
+
+    document.getElementById("search").addEventListener("input", (e) => {
+      renderList(e.target.value);
+    });
+  </script>
+</body>
+</html>
