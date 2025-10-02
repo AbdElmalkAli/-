@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="../imges/download.jpg">
-
+<link rel="stylesheet" href="../css/css.css">
   <title>تخزن</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background:#f7feb5;
+      background:#71e3ff;
       color:#fff;
       margin:0;
       padding:20px;
       text-align:center;
     }
     h1 {
-      color:#000000;
+      color:#ffffff;
       font-size:2.6rem; /* عنوان كبير */
     }
     input, button {
@@ -42,7 +42,7 @@
     .list {
       margin-top:20px;
       text-align:left;
-      background:#222;
+      background:#fffefe;
       padding:20px;
       border-radius:12px;
       max-width:900px;
@@ -79,10 +79,38 @@ border-left:6px solid #4CAF50;
         background-color: #dedada;
 
 }
+h3{
+  color: black;
+}
   </style>
 </head>
 <body>
-  <h1>Welcame</h1>
+
+  <h1>Welcame</h1> <div class="toggle-wrapper">
+  <input class="toggle-checkbox" id="bgToggle" type="checkbox">
+  <div class="toggle-container">  
+    <div class="toggle-button">
+      <div class="toggle-button-circles-container">
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+        <div class="toggle-button-circle"></div>
+       
+      </div>
+       
+    </div>
+  </div>
+  <h4>black or Baby Blue</h4>
+</div>
+
  <input id="search" class="search" placeholder="🔍 Search..." />
   <!-- Inputs -->
   <input id="input1" placeholder="أسمي العملاء" />
@@ -97,9 +125,8 @@ border-left:6px solid #4CAF50;
   <div class="list" id="list">
     <h3>Saved Data:</h3>
   </div>
-  <div class="by">
-    <h1>web by AbdElmalk</h1>
-  </div>
+
+
   <script>
     console.log('by AbdElmalk');
     
@@ -155,7 +182,19 @@ border-left:6px solid #4CAF50;
 
     document.getElementById("search").addEventListener("input", (e) => {
       renderList(e.target.value);
-    });
+    })
+      const toggle = document.getElementById("bgToggle");
+
+  toggle.addEventListener("change", function() {
+    if (this.checked) {
+      // أول ضغطة (تشغيل)
+      document.body.style.backgroundColor = "#020202"; // أزرق
+    } else {
+      // ضغطة تانية (إيقاف)
+      document.body.style.backgroundColor = "#71e3ff"; // يرجع أبيض
+      
+    }
+  });
   </script>
 </body>
 </html>
