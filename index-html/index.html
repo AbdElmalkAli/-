@@ -16,7 +16,7 @@
     }
     h1 {
       color:#000000;
-      font-size:2.7rem; /* عنوان كبير */
+      font-size:2.6rem; /* عنوان كبير */
     }
     input, button {
       padding:10px;  /* أكبر */
@@ -36,7 +36,9 @@
       font-weight:bold;
       cursor:pointer;
     }
-    button:hover { background:#45a049; }
+    button:hover { background:#45a049;
+            border-left:6px solid #04790a ;
+ }
     .list {
       margin-top:20px;
       text-align:left;
@@ -66,9 +68,16 @@
       border-radius:8px;
       font-size:1.2rem;
       cursor:pointer;
+
     }
 .deleteBtn:hover{
   background-color: #af1105;
+border-left:6px solid  #d21305;
+}
+.search:hover{
+border-left:6px solid #4CAF50;
+        background-color: #dedada;
+
 }
   </style>
 </head>
@@ -76,7 +85,7 @@
   <h1>Welcame</h1>
  <input id="search" class="search" placeholder="🔍 Search..." />
   <!-- Inputs -->
-  <input id="input1" placeholder="اسم" />
+  <input id="input1" placeholder="أسمي العملاء" />
   <input id="input2" type="number" placeholder="رقم" />
   <input id="input3" placeholder="اي حاجه" />
   <button id="save">💾 Save</button>
