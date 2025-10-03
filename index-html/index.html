@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
+  
   <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="../imges/download.jpg">
-<link rel="stylesheet" href="../css/css.css">
   <title>تخزن</title>
+  <link rel="stylesheet" href="../css/css.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -82,11 +82,23 @@ border-left:6px solid #4CAF50;
 h3{
   color: black;
 }
+#input4 {
+  display: block;
+  margin-top: 20px;   /* مسافة من فوق */
+  margin-bottom: 20px;/* مسافة من تحت */
+  padding: 10px;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  font-size: 20px;
+  background: #fff;
+  margin-left: 45%;
+}
+
   </style>
 </head>
 <body>
-
-  <h1>Welcame</h1> <div class="toggle-wrapper">
+  <h1>welcame</h1>
+     <div class="toggle-wrapper">
   <input class="toggle-checkbox" id="bgToggle" type="checkbox">
   <div class="toggle-container">  
     <div class="toggle-button">
@@ -109,42 +121,54 @@ h3{
     </div>
   </div>
   <h4>black or Baby Blue</h4>
-</div>
-
- <input id="search" class="search" placeholder="🔍 Search..." />
-  <!-- Inputs -->
-  <input id="input1" placeholder="أسمي العملاء" />
-  <input id="input2" type="number" placeholder="رقم" />
+</div> 
+ <input id="search" placeholder="🔍 Search..." />
+  <!-- 4 inputs -->
+  <input id="input1" placeholder="اسمي العملاء" />
+  <input id="input2" type="number" placeholder="رقم العملاء" />
   <input id="input3" placeholder="اي حاجه" />
-  <button id="save">💾 Save</button>
+  <select id="input4">
+    <option value="">-- اختر البلد --</option>
+    <option value="Egypt">Egypt</option>
+    <option value="Saudi Arabia">Saudi Arabia</option>
+    <option value="UAE">UAE</option>
+    <option value="Kuwait">Kuwait</option>
+    <option value="Qatar">Qatar</option>
+    <option value="USA">USA</option>
+    <option value="UK">UK</option>
+    <option value="France">France</option>
+    <option value="Germany">Germany</option>
+  </select>  
+  <button id="save">Save</button>
 
-  <!-- Search -->
- 
+  <!-- Search box -->
+
 
   <!-- List -->
   <div class="list" id="list">
     <h3>Saved Data:</h3>
   </div>
 
-
   <script>
-    console.log('by AbdElmalk');
+    console.log('by A bdElmalk');
     
+    // تحميل البيانات
     let savedData = JSON.parse(localStorage.getItem("entries")) || [];
 
     function renderList(filter = "") {
       const list = document.getElementById("list");
       list.innerHTML = "<h3>Saved Data:</h3>";
       savedData.forEach((entry, index) => {
-        const text = `${entry.input1} ${entry.input2} ${entry.input3}`.toLowerCase();
+        const text = `${entry.input1} ${entry.input2} ${entry.input3} ${entry.input4}`.toLowerCase();
         if (text.includes(filter.toLowerCase())) {
           const div = document.createElement("div");
           div.className = "item";
           div.innerHTML = `
             <div>
-              <span><b>اسم:</b> ${entry.input1}</span>
+              <span><b>اسمي العملاء:</b> ${entry.input1}</span>
               <span><b>رقم:</b> ${entry.input2}</span>
-              <span><b>اي حاجه:</b> ${entry.input3}</span>
+              <span><b>اي حلجه:</b> ${entry.input3}</span>
+              <span><b>البلد:</b> ${entry.input4}</span>
             </div>
             <button class="deleteBtn" data-index="${index}">Delete</button>
           `;
@@ -152,6 +176,7 @@ h3{
         }
       });
 
+      // زرار المسح
       document.querySelectorAll(".deleteBtn").forEach(btn => {
         btn.addEventListener("click", (e) => {
           const index = e.target.getAttribute("data-index");
@@ -162,24 +187,29 @@ h3{
       });
     }
 
+    // أول عرض
     renderList();
 
+    // حفظ
     document.getElementById("save").addEventListener("click", () => {
       const entry = {
         input1: document.getElementById("input1").value,
         input2: document.getElementById("input2").value,
-        input3: document.getElementById("input3").value
+        input3: document.getElementById("input3").value,
+        input4: document.getElementById("input4").value
       };
-      if (entry.input1 || entry.input2 || entry.input3) {
+      if (entry.input1 || entry.input2 || entry.input3 || entry.input4) {
         savedData.push(entry);
         localStorage.setItem("entries", JSON.stringify(savedData));
         renderList(document.getElementById("search").value);
         document.getElementById("input1").value = "";
         document.getElementById("input2").value = "";
         document.getElementById("input3").value = "";
+        document.getElementById("input4").value = "";
       }
     });
 
+    // البحث
     document.getElementById("search").addEventListener("input", (e) => {
       renderList(e.target.value);
     })
