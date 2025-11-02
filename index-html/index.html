@@ -1,8 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-      <link rel="icon" type="image/png" href="../imges/download.jpg">
-
+  <link rel="icon" type="image/png" href="../imges/download.jpg">
   <meta charset="utf-8" />
   <title>تخزن</title>
   <link rel="stylesheet" href="../css/css.css">
@@ -17,29 +16,28 @@
     }
     h1 {
       color:#ffffff;
-      font-size:2.6rem; /* عنوان كبير */
+      font-size:2.6rem;
     }
-    input, button {
-      padding:10px;  /* أكبر */
-      font-size:1.5rem; /* خط كبير */
+    input, button, select {
+      padding:10px;
+      font-size:1.5rem;
       margin:10px;
       border-radius:10px;
       border:2px solid #4CAF50;
       width:80%; 
-      max-width:700px; /* علشان يبان وسط الشاشة */
+      max-width:700px;
       display:block;
       margin-left:auto;
       margin-right:auto;
     }
     button {
-      background:#4CAF50;
+      background:#45a049;
       color:white;
       font-weight:bold;
       cursor:pointer;
     }
-    button:hover { background:#45a049;
-            border-left:6px solid #04790a ;
- }
+    button:hover { background:#45a049; border-left:6px solid #04790a; }
+    button:active { background-color: transparent; scale:.9; }
     .list {
       margin-top:20px;
       text-align:left;
@@ -69,68 +67,30 @@
       border-radius:8px;
       font-size:1.2rem;
       cursor:pointer;
-
     }
-.deleteBtn:hover{
-  background-color: #af1105;
-border-left:6px solid  #d21305;
-}
-.search:hover{
-border-left:6px solid #4CAF50;
-        background-color: #dedada;
-
-}
-h3{
-  color: black;
-}
-#input4 {
-  display: block;
-  margin-top: 20px;   /* مسافة من فوق */
-  margin-bottom: 20px;/* مسافة من تحت */
-  padding: 10px;
-  border: 2px solid #4CAF50;
-  border-radius: 10px;
-  font-size: 20px;
-  background: #fff;
-  margin-left: 45%;
-}
-
+    .deleteBtn:hover{ background-color:#af1105; border-left:6px solid #d21305; }
+    .error {
+      color:red;
+      font-size:1.3rem;
+      display:none;
+    }
+    h3{ color:black; }
+    #input4 {
+      background:#fff;
+      color:black;
+    }
   </style>
 </head>
 <body>
   <h1>welcame</h1>
-     <div class="toggle-wrapper">
-  <input class="toggle-checkbox" id="bgToggle" type="checkbox">
-  <div class="toggle-container">  
-    <div class="toggle-button">
-      <div class="toggle-button-circles-container">
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-        <div class="toggle-button-circle"></div>
-       
-      </div>
-       
-    </div>
-  </div>
-  <h4>black or Baby Blue</h4>
-</div> 
- <input id="search" placeholder="🔍 Search..." />
-  <!-- 4 inputs -->
+
+  <input id="search" placeholder="🔍 Search..." />
   <input id="input1" placeholder="اسمي العملاء" />
   <input id="input2" type="number" placeholder="رقم العملاء" />
   <input id="input3" placeholder="اي حاجه" />
   <select id="input4">
     <option value="">-- اختر البلد --</option>
-    <option value=" Egypt">Egypt</option>
+    <option value="Egypt">Egypt</option>
     <option value="Saudi Arabia">Saudi Arabia</option>
     <option value="UAE">UAE</option>
     <option value="Kuwait">Kuwait</option>
@@ -141,19 +101,15 @@ h3{
     <option value="Germany">Germany</option>
   </select>  
   <button id="save">Save</button>
+  <p id="error" class="error">error❌</p>
 
-  <!-- Search box -->
-
-
-  <!-- List -->
   <div class="list" id="list">
     <h3>Saved Data:</h3>
   </div>
 
   <script>
-    console.log('by A bdElmalk');
-    
-    // تحميل البيانات
+    console.log('by AbdElmalk');
+
     let savedData = JSON.parse(localStorage.getItem("entries")) || [];
 
     function renderList(filter = "") {
@@ -168,7 +124,7 @@ h3{
             <div>
               <span><b>اسمي العملاء:</b> ${entry.input1}</span>
               <span><b>رقم:</b> ${entry.input2}</span>
-              <span><b>اي حلجه:</b> ${entry.input3}</span>
+              <span><b>اي حاجه:</b> ${entry.input3}</span>
               <span><b>البلد:</b> ${entry.input4}</span>
             </div>
             <button class="deleteBtn" data-index="${index}">Delete</button>
@@ -177,7 +133,6 @@ h3{
         }
       });
 
-      // زرار المسح
       document.querySelectorAll(".deleteBtn").forEach(btn => {
         btn.addEventListener("click", (e) => {
           const index = e.target.getAttribute("data-index");
@@ -188,44 +143,51 @@ h3{
       });
     }
 
-    // أول عرض
     renderList();
 
-    // حفظ
     document.getElementById("save").addEventListener("click", () => {
-      const entry = {
-        input1: document.getElementById("input1").value,
-        input2: document.getElementById("input2").value,
-        input3: document.getElementById("input3").value,
-        input4: document.getElementById("input4").value
-      };
-      if (entry.input1 || entry.input2 || entry.input3 || entry.input4) {
-        savedData.push(entry);
-        localStorage.setItem("entries", JSON.stringify(savedData));
-        renderList(document.getElementById("search").value);
-        document.getElementById("input1").value = "";
-        document.getElementById("input2").value = "";
-        document.getElementById("input3").value = "";
-        document.getElementById("input4").value = "";
+      const input1 = document.getElementById("input1");
+      const input2 = document.getElementById("input2");
+      const input3 = document.getElementById("input3");
+      const input4 = document.getElementById("input4");
+      const error = document.getElementById("error");
+
+      // تحقق إذا كانت كل الخانات فاضية
+      if (
+        input1.value.trim() === "" &&
+        input2.value.trim() === "" &&
+        input3.value.trim() === "" &&
+        input4.value.trim() === ""
+      ) {
+        error.style.display = "block";
+        [input1, input2, input3, input4].forEach(inp => inp.style.border = "2px solid red");
+        return; // يوقف التنفيذ
+      } else {
+        error.style.display = "none";
+        [input1, input2, input3, input4].forEach(inp => inp.style.border = "2px solid #4CAF50");
       }
+
+      const entry = {
+        input1: input1.value,
+        input2: input2.value,
+        input3: input3.value,
+        input4: input4.value
+      };
+
+      savedData.push(entry);
+      localStorage.setItem("entries", JSON.stringify(savedData));
+      renderList(document.getElementById("search").value);
+
+      // تفريغ الحقول
+      input1.value = "";
+      input2.value = "";
+      input3.value = "";
+      input4.value = "";
     });
 
-    // البحث
     document.getElementById("search").addEventListener("input", (e) => {
       renderList(e.target.value);
-    })
-      const toggle = document.getElementById("bgToggle");
-
-  toggle.addEventListener("change", function() {
-    if (this.checked) {
-      // أول ضغطة (تشغيل)
-      document.body.style.backgroundColor = "#020202"; // أزرق
-    } else {
-      // ضغطة تانية (إيقاف)
-      document.body.style.backgroundColor = "#71e3ff"; // يرجع أبيض
-      
-    }
-  });
+    });
   </script>
 </body>
 </html>
